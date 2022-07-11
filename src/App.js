@@ -1,18 +1,30 @@
 import Header from './component/Header';
 import styled from 'styled-components';
+import { Route } from 'react-router-dom'
+
 import './fonts/fonts.css'
+import Main from './component/Main';
+import AddForm from './component/AddForm';
 
 function App() {
   return (
-    <Wrap>
+    <div>
       <Header />
-    </Wrap>
+      <Container>
+        <Route path="/" exact>
+          <Main />
+        </Route>
+        <Route path="/add">
+          <AddForm />
+        </Route>
+      </Container>
+    </div>
   );
 }
 
-const Wrap = styled.div`
-  width: 100vw;
-  height: 6000px;
+const Container = styled.div`
+  max-width: 1400px;
+  margin: 60px auto;
 `
 
 export default App;

@@ -1,10 +1,14 @@
 import React from 'react'
 import styled from "styled-components"
+import { useHistory } from 'react-router-dom'
 
 const Header = () => {
+  const history = useHistory();
   return (
     <Title>
-      <h1>Vocabulary</h1>
+      <h1 onClick = {
+        () => {history.push('/')}
+      } style ={{cursor: "pointer"}}>Vocabulary</h1>
     </Title>
   )
 }
@@ -16,7 +20,7 @@ const Title = styled.div`
   top: 0;
   left: 0;
   right: 0;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid pink;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -24,8 +28,8 @@ const Title = styled.div`
     font-family: 'GmarketB';
     color: #fff;
     text-shadow: 
-      0 0 3px #000,
-      2px 2px 3px #000;
+      0 0 3px hotpink,
+      2px 2px 3px pink;
     font-style: italic;
   }
 `
