@@ -1,25 +1,35 @@
-import React, { useRef } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import { useHistory } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { createCard } from '../redux/modules/voka'
 
 const AddForm = (props) => {
   
+  const dispatch = useDispatch();
   const voka_text = React.useRef(null);
   const desc_text = React.useRef(null);
   const ex_text = React.useRef(null);
 
   const history = useHistory();
 
-  window.setTimeout(() => {
-    console.log(voka_text.current.value)
-    console.log(desc_text.current.value)
-    console.log(ex_text.current.value)
-  }, 5000);
+  const addNewCard = (e) => {
+    dispatch (
+      createCard
+      (
+        voka_text.current.value,
+        desc_text.current.value,
+        ex_text.current.value
+      )
+    )
+    history.push("/")
+    e.preventDefault()
+  }
 
   return (
     <Container>
       <SubTitle>단어 추가하기</SubTitle>
-      <form>
+      <form onSubmit = {addNewCard}>
         <Input>
           <p>단어</p>
           <input ref={voka_text} type="text" />
@@ -32,9 +42,7 @@ const AddForm = (props) => {
           <p>예문</p>
           <input ref={ex_text} type="text" />
         </Input>
-        <SaveBtn type="submit" onClick = {
-          () => { history.push("/") }
-        }>저장하기</SaveBtn>
+        <SaveBtn>저장하기</SaveBtn>
       </form>
     </Container>
   )

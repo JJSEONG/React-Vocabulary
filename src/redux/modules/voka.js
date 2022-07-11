@@ -20,36 +20,22 @@ const initialState = {
       mean: "딸기",
       ex: "딸기는 빨간색"
     },
-    {
-      word: "Strawberry",
-      mean: "딸기",
-      ex: "딸기는 빨간색"
-    },
-    {
-      word: "Strawberry",
-      mean: "딸기",
-      ex: "딸기는 빨간색"
-    },
-    {
-      word: "Strawberry",
-      mean: "딸기",
-      ex: "딸기는 빨간색"
-    }
   ]
 }
 
 // Action Creators
-export function createCard(card_text) {
-  return { type: CREATE, card_text };
+export function createCard(word, mean, ex) {
+  console.log("액션 생성!")
+  return { type: CREATE, word: word, mean: mean, ex: ex };
 }
 
 // Reducer
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
-    // do reducer stuff
     case "voka/CREATE": {
-      const new_card = [...state.list, action.card_text];
-      return {list : new_card};
+      console.log(action.word, action.mean, action.ex)
+      const new_card = [...state.card, {word: action.word, mean: action.mean, ex: action.ex}];
+      return {card : new_card};
     }
     default: return state;
   }
