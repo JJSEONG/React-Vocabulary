@@ -8,7 +8,7 @@ const Header = () => {
     <Title>
       <h1 onClick = {
         () => {history.push('/')}
-      } style ={{cursor: "pointer"}}>Vocabulary</h1>
+      } style ={{cursor: "pointer"}}>English Vocabulary</h1>
     </Title>
   )
 }
@@ -16,10 +16,13 @@ const Header = () => {
 const Title = styled.div`
   width: 100vw;
   height: 60px;
+  background-color: #fff;
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
+  bottom: 0;
+  z-index: 5000;
   border-bottom: 1px solid pink;
   display: flex;
   justify-content: center;

@@ -1,10 +1,22 @@
 import React from 'react'
 import styled from 'styled-components'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
+import { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { createCard } from '../redux/modules/voka'
+import { createCard, addVokaFB, updateVokaFB } from '../redux/modules/voka'
+import { useSelector } from 'react-redux'
 
 const AddForm = (props) => {
+
+  const params = useParams()
+  const new_card = useSelector((state) => state.voka.card);
+
+  const arr = new_card.find((card) => {
+    if(card.id === params.id) return card
+  })
+  console.log(new_card)
+  console.log(params.id)
+  console.log(arr)
   
   const dispatch = useDispatch();
   const voka_text = React.useRef(null);
@@ -14,35 +26,65 @@ const AddForm = (props) => {
   const history = useHistory();
 
   const addNewCard = (e) => {
-    dispatch (
-      createCard
-      (
-        voka_text.current.value,
-        desc_text.current.value,
-        ex_text.current.value
-      )
-    )
-    history.push("/")
+    // dispatch (
+    //   createCard
+    //   ({
+    //     word : voka_text.current.value,
+    //     mean : desc_text.current.value,
+    //     ex : ex_text.current.value
+    //   })
+    // )
+
+    let voka = { 
+      word: voka_text.current.value,
+      mean: desc_text.current.value,
+      ex: ex_text.current.value
+    }
+
+    if(voka_text.current.value === '') {
+      alert('단어를 입력해주세요!')
+    } else if(desc_text.current.value === '') {
+      alert('의미를 입력해주세요!')
+    } else if(ex_text.current.value === '') {
+      alert('예문을 입력해주세요!')
+    } else {
+      dispatch(addVokaFB(voka));
+      history.push("/")
+    }
     e.preventDefault()
+  }
+
+  const updateCard = (e) => {
+    
+    e.preventDefault()
+
+    let voka = {
+      word: voka_text.current.value,
+      mean: desc_text.current.value,
+      ex: ex_text.current.value
+    }
+
+    dispatch(updateVokaFB(voka, params.id));
+    history.push("/")
   }
 
   return (
     <Container>
-      <SubTitle>단어 추가하기</SubTitle>
-      <form onSubmit = {addNewCard}>
+      <SubTitle>{ arr ? "단어 수정하기" : "단어 추가하기" }</SubTitle>
+      <form onSubmit = { (e) => (arr ? updateCard(e) : addNewCard(e)) } >
         <Input>
           <p>단어</p>
-          <input ref={voka_text} type="text" />
+          <input ref={voka_text} type="text" maxLength="30" defaultValue = { arr ? arr.word : "" } />
         </Input>
         <Input>
           <p>의미</p>
-          <input ref={desc_text} type="text" />
+          <input ref={desc_text} type="text" maxLength="30" defaultValue = { arr ? arr.mean : "" } /> 
         </Input>
         <Input>
           <p>예문</p>
-          <input ref={ex_text} type="text" />
+          <input ref={ex_text} type="text" maxLength="60" defaultValue = { arr ? arr.ex : "" } /> 
         </Input>
-        <SaveBtn>저장하기</SaveBtn>
+        <SaveBtn>{arr ? "수정하기" : "저장하기"}</SaveBtn>
       </form>
     </Container>
   )
