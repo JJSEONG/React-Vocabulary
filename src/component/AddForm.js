@@ -64,8 +64,17 @@ const AddForm = (props) => {
       ex: ex_text.current.value
     }
 
-    dispatch(updateVokaFB(voka, params.id));
-    history.push("/")
+    if(voka_text.current.value === '') {
+      alert('단어를 입력해주세요!')
+    } else if(desc_text.current.value === '') {
+      alert('의미를 입력해주세요!')
+    } else if(ex_text.current.value === '') {
+      alert('예문을 입력해주세요!')
+    } else {
+      dispatch(updateVokaFB(voka, params.id));
+      history.push("/")
+    }
+
   }
 
   return (
@@ -97,6 +106,9 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   margin: 120px auto;
+  padding: 20px;
+  border: 2px solid pink;
+  border-radius: 20px;
 `
 
 const SubTitle = styled.h2`
@@ -113,12 +125,15 @@ const Input = styled.div`
   margin: 0 auto;
   p {
     font-size: 20px;
+    color: #fff;
     margin: 30px 0 10px;
   }
   input {
     width: 300px;
     height: 20px;
     border: none;
+    background-color: transparent;
+    color: #fff;
     border-bottom: 2px solid pink;
     outline: none;
   }
@@ -136,7 +151,7 @@ const SaveBtn = styled.button`
   background-color: transparent;
   border: 2px solid pink;
   border-radius: 10px;
-  color: black;
+  color: white;
   cursor: pointer;
   &:hover {
     background-color: pink;

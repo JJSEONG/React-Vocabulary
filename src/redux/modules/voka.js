@@ -22,8 +22,12 @@ export function createCard(voka) {
   return { type: CREATE, voka };
 }
 
-export function updateCard(voka) {
-  return { type: UPDATE, voka }
+export function updateCard(voka, id) {
+  return { type: UPDATE, voka: voka, id: id }
+}
+
+export function deleteCard(id) {
+  return { type: DELETE, id: id}
 }
 
 // middlewares
@@ -53,9 +57,10 @@ export const addVokaFB = (voka) => {
 
 export const updateVokaFB = (voka, id) => {
   return function (dispatch) {
-    console.log(voka)
     const docRef = doc(collection(db, "voka"), id);
     updateDoc(docRef, voka)
+
+    dispatch(updateCard(voka, id))
   }
 }
 
@@ -71,10 +76,18 @@ export default function reducer(state = initialState, action = {}) {
       return {card : new_card};
     }
     case "voka/UPDATE": {
-      const update_card = [...state.card, ...action.voka]
-      console.log(update_card)
-      return {card : update_card}
+      state.card.find((word) => { 
+        if(word.id === action.id) {
+          word.word = action.voka.word;
+          word.mean = action.voka.mean;
+          word.ex = action.voka.ex;
+
+          return;
+        }
+      })
+      return {...state}
     }
+
     default: return state;
   }
 }

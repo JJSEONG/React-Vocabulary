@@ -16,7 +16,7 @@ const Header = () => {
 const Title = styled.div`
   width: 100vw;
   height: 60px;
-  background-color: #fff;
+  background-color: #000;
   position: fixed;
   top: 0;
   left: 0;

@@ -11,6 +11,12 @@ const Card = () => {
 
   const new_card = useSelector((state) => state.voka.card);
 
+  console.log(new_card)
+
+  const deleteCard = () => {
+    alert("삭제는 구현하지 못했습니다.")
+  }
+
   return (
     <CardWrap>
       {new_card.map((v, i) => {
@@ -40,7 +46,7 @@ const Card = () => {
                   </i>
               </div>
               <div>
-                  <i>
+                  <i onClick={() => deleteCard()}>
                     <FontAwesomeIcon icon={ faXmark } />
                   </i>
               </div>
@@ -88,8 +94,9 @@ const CardCon = styled.div`
     margin: 0;
   }
   p {
-    font-family: 'GmarketL';
+    font-family: 'GmarketM';
     font-size: 12px;
+    color: #fff;  
     margin: 4px 0;
   }
 `
@@ -119,7 +126,7 @@ const Icon = styled.div`
     cursor: pointer;
   }
   i:hover {
-    color: rgba(255, 122, 165, 0.2);
+    color: rgba(255, 122, 165, 1);
   }
 `
 
